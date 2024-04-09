@@ -174,6 +174,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+        //test evento
 
         System.out.println("Gestore degli eventi: ");
         evento = gestoreInserimento();
@@ -192,6 +193,8 @@ public class Main {
 
 
     }
+
+
 
 
 

@@ -73,6 +73,11 @@ public class Evento {
         this.postiPrenotati -= nPostiDaDisdire;
     }
 
+    public boolean isSameDate(LocalDate searchDate){
+        // ritorna true se le date sono uguali
+        return searchDate.isEqual(this.data);
+    }
+
     // toString
 
 

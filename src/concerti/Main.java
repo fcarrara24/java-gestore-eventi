@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    public static Evento evento;
 
     private static String stringMessage(String message){
         Scanner sc = new Scanner(System.in);
-        System.out.println(message);
+        System.out.print(message);
         return sc.nextLine();
     }
 
@@ -46,6 +47,22 @@ public class Main {
         }
         return postiTotali;
     }
+
+//    private static boolean getBoolean(String message){
+//        boolean flag = false;
+//        boolean outVariable = true;
+//        while(!flag){
+//            try {
+//                outVariable = Boolean.parseBoolean(stringMessage(message));
+//                flag = true;
+//            }
+//            catch (Exception e){
+//                System.out.println("inserire true o false");
+//            }
+//
+//        }
+//        return outVariable;
+//    }
     private static Evento gestoreInserimento(){
         boolean flag = false;
         Evento evento = null;
@@ -53,19 +70,75 @@ public class Main {
             try {
                 String titolo = stringMessage("inserire il titolo");
                 LocalDate data = newDate();
-                int postiTotali = getNumber("inserire i posti totali disponibili per la prenotazione");
+                int postiTotali = getNumber("inserire i posti totali disponibili per la prenotazione ");
                 evento = new Evento(titolo, data, postiTotali);
                 flag = true;
             } catch (Exception e) {
+                System.out.println("########################################################");
                 System.out.println("l'inserimento non è andato a buon fine: "+e.getMessage());
+                System.out.println("########################################################");
             }
         }
         return evento;
     }
+
+    public static void prenotaODisdici(boolean aggiungi){
+        int posti = getNumber("inserire il numero di posti da "+(aggiungi? "prenotare ":"disdire "));
+        try {
+            if(aggiungi) evento.prenota(posti);
+            else evento.disdici(posti);
+        } catch (Exception e){
+            System.out.println("########################################################");
+            System.out.println("l'operazione non è andata a buon fine: "+e.getMessage());
+            System.out.println("########################################################");
+        }
+    }
+
+    public static String numeroPostiPrenotati(){
+        String outString = "Il numero di posti occupati è di "+evento.getPostiPrenotati()+" su "+evento.getPostiTotali();
+        return outString;
+    }
+
+    public static void cicloPrenotazioni(){
+        System.out.println("\n\nprenotazioni");
+        boolean continua = true;
+        while(continua){
+            prenotaODisdici(true);
+            // stampo il totale delle prenotazioni
+            System.out.println(numeroPostiPrenotati());
+            continua = Boolean.parseBoolean(stringMessage("desidera continuare con le prenotazioni {true/altro} "));
+        }
+    }
+
+
+
+    public static void cicloDisdette(){
+        System.out.println("\n\ndisdette");
+        boolean continua = true;
+        while(continua){
+            prenotaODisdici(false);
+            // stampo il totale delle disdette
+            System.out.println(numeroPostiPrenotati());
+            continua = Boolean.parseBoolean(stringMessage("desidera continuare a disdire {true/altro} "));
+        }
+    }
+
+
+
+
+
+
     public static void main(String[] args) {
-        List<Evento> eventi = new ArrayList<>();
+
         System.out.println("Gestore degli eventi: ");
-        eventi.add(gestoreInserimento());
-        System.out.println(eventi.get(0).toString());
+        evento = gestoreInserimento();
+        //stampa
+        System.out.println(evento.toString());
+        // ciclo prenotazioni
+        cicloPrenotazioni();
+        // ciclo disdette
+        cicloDisdette();
+        System.out.println("\n\nfine disdette\n\n");
+        System.out.println(numeroPostiPrenotati());
     }
 }

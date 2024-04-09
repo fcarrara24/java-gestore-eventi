@@ -12,7 +12,7 @@ public class Evento {
     public Evento(String titolo, LocalDate data, int postiTotali ) throws IllegalArgumentException {
         if(! DateUtilities.isntPassed(data))
             throw new IllegalArgumentException("La data dell'evento che stai cercando di inserire è gia passata");
-        else if(postiTotali > 0)
+        else if(postiTotali < 0)
             throw new IllegalArgumentException("i posti disponibili per l'evento non possono essere negativi");
         this.titolo = titolo;
         this.data = data;

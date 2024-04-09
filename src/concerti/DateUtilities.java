@@ -21,11 +21,9 @@ public class DateUtilities {
      * @param date
      * @return
      */
-    public static String longFormatDate(LocalDate date){
-
-        DateTimeFormatter df = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
-        String formattedDate = date.format(df);
-
+    public static String longFormatDate(LocalDate date) {
+        DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+        String formattedDate = df.format(date);
         return formattedDate;
     }
 }

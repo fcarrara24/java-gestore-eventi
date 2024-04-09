@@ -35,7 +35,7 @@ public class DateUtilities {
      */
     public static String formattedTime(LocalTime time){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedTime = localTime.format(formatter);
+        String formattedTime = time.format(formatter);
         return formattedTime;
     }
 }

@@ -1,6 +1,8 @@
 package concerti;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,26 @@ public class Main {
         return trueData;
     }
 
+    private static LocalTime newTime(){
+        boolean flag = false;
+        LocalTime trueTime = null;
+        do{
+            try{
+                String data = stringMessage("Inserisci l'orario (formato hh:mm)");
+                // splitting array to get hours and minutes
+                String[] parts = data.split(":");
+                trueTime = LocalTime.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                // if localtime throw exception flag stays false
+                if(trueTime instanceof LocalTime){
+                    flag =true;
+                }
+            } catch (Exception e){
+                System.out.println("la data non è in formato valido");
+            }
+        } while (!flag);
+        return trueTime;
+    }
+
     private static int getNumber(String message){
         boolean flag = false;
         int postiTotali = 0;
@@ -48,21 +70,6 @@ public class Main {
         return postiTotali;
     }
 
-//    private static boolean getBoolean(String message){
-//        boolean flag = false;
-//        boolean outVariable = true;
-//        while(!flag){
-//            try {
-//                outVariable = Boolean.parseBoolean(stringMessage(message));
-//                flag = true;
-//            }
-//            catch (Exception e){
-//                System.out.println("inserire true o false");
-//            }
-//
-//        }
-//        return outVariable;
-//    }
     private static Evento gestoreInserimento(){
         boolean flag = false;
         Evento evento = null;
@@ -80,6 +87,44 @@ public class Main {
             }
         }
         return evento;
+    }
+
+    private static  BigDecimal newBigDecimal(String message){
+        boolean flag = false;
+        BigDecimal postiTotali = null;
+        while(!flag){
+            try {
+                postiTotali = new BigDecimal(stringMessage(message));
+                flag = true;
+            }
+            catch (Exception e){
+                System.out.println("inserire un numero valido");
+            }
+
+        }
+        return postiTotali;
+    }
+
+    private static Concerto creazioneConcerto(){
+        boolean flag = false;
+        Concerto concerto = null;
+        while (!flag){
+            try {
+                String titolo = stringMessage("inserire il titolo");
+                LocalDate data = newDate();
+                int postiTotali = getNumber("inserire i posti totali disponibili per la prenotazione ");
+                LocalTime ora = newTime();
+                BigDecimal prezzo = newBigDecimal("inserire il prezzo in formato ##.## ");
+
+                concerto = new Concerto(titolo, data, postiTotali, ora, prezzo);
+                flag = true;
+            } catch (Exception e) {
+                System.out.println("########################################################");
+                System.out.println("l'inserimento non è andato a buon fine: "+e.getMessage());
+                System.out.println("########################################################");
+            }
+        }
+        return concerto;
     }
 
     public static void prenotaODisdici(boolean aggiungi){
@@ -134,11 +179,21 @@ public class Main {
         evento = gestoreInserimento();
         //stampa
         System.out.println(evento.toString());
-        // ciclo prenotazioni
         cicloPrenotazioni();
-        // ciclo disdette
         cicloDisdette();
-        System.out.println("\n\nfine disdette\n\n");
         System.out.println(numeroPostiPrenotati());
+
+        // test Concerto
+
+        System.out.println("gestore concerti");
+        Concerto concerto = creazioneConcerto();
+        System.out.println("concerto creato");
+        System.out.println(concerto.toString());
+
+
     }
+
+
+
+
 }

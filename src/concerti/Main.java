@@ -173,25 +173,42 @@ public class Main {
 
 
 
+//    public static void main(String[] args) {
+//        //test evento
+//
+//        System.out.println("Gestore degli eventi: ");
+//        evento = gestoreInserimento();
+//        //stampa
+//        System.out.println(evento.toString());
+//        cicloPrenotazioni();
+//        cicloDisdette();
+//        System.out.println(numeroPostiPrenotati());
+//
+//        // test Concerto
+//
+//        System.out.println("gestore concerti");
+//        Concerto concerto = creazioneConcerto();
+//        System.out.println("concerto creato");
+//        System.out.println(concerto.toString());
+//
+//
+//    }
+
     public static void main(String[] args) {
-        //test evento
+        ProgrammEventi pr = new ProgrammEventi( "programma eventi");
 
-        System.out.println("Gestore degli eventi: ");
-        evento = gestoreInserimento();
-        //stampa
-        System.out.println(evento.toString());
-        cicloPrenotazioni();
-        cicloDisdette();
-        System.out.println(numeroPostiPrenotati());
-
-        // test Concerto
-
-        System.out.println("gestore concerti");
-        Concerto concerto = creazioneConcerto();
-        System.out.println("concerto creato");
-        System.out.println(concerto.toString());
-
-
+            pr.addEvento(new Evento("evento 1", LocalDate.parse("2024-08-09"), 1000 ));
+            pr.addEvento(new Evento("evento 2", LocalDate.parse("2024-08-09"), 2000 ));
+            pr.addEvento(new Evento("evento 3", LocalDate.parse("2025-08-09"), 1000 ));
+            pr.addEvento(new Concerto("concerto 1", LocalDate.parse("2024-08-09"), 1000, LocalTime.of(23, 45), new BigDecimal(12.45)));
+            pr.addEvento(new Concerto("concerto 2", LocalDate.parse("2026-08-09"), 2000, LocalTime.of(12, 1), new BigDecimal(12.4)));
+            System.out.println("totale eventi "+pr.contaEventi()+"\n\n");
+            System.out.println("lista eventi 2024-04-09: \n");
+            pr.listaEventiData(LocalDate.parse("2024-08-09")).forEach(evento -> System.out.println(evento.toString()));
+            System.out.println("\n\nlista eventi ordinata per data (crescente): ");
+            System.out.println(pr.orderedEvents());
+            pr.svuotaLista();
+            System.out.println("\n\nlista svuotata " +pr.contaEventi());
     }
 
 

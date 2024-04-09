@@ -15,7 +15,7 @@ public class Concerto extends Evento{
 
     public Concerto(String titolo, LocalDate data, int postiTotali, LocalTime ora, BigDecimal prezzo) throws IllegalArgumentException {
         super(titolo, data, postiTotali);
-        if(data.isEqual(LocalDate.now()) && ora.isAfter(LocalTime.now())){
+        if(data.isEqual(LocalDate.now()) && LocalTime.now().isAfter(ora)){
             throw new IllegalArgumentException("l'ora che desideri inserire è gia passata");
         } else if(prezzo.compareTo(zero) < 0){
             throw new IllegalArgumentException("il prezzo del concerto non puo essere negativo");

@@ -1,6 +1,7 @@
 package concerti;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -25,5 +26,16 @@ public class DateUtilities {
         DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
         String formattedDate = df.format(date);
         return formattedDate;
+    }
+
+    /**
+     * returns formatted time
+     * @param time
+     * @return
+     */
+    public static String formattedTime(LocalTime time){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = localTime.format(formatter);
+        return formattedTime;
     }
 }

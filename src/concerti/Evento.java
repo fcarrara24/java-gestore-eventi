@@ -51,8 +51,9 @@ public class Evento {
     public LocalDate getData() {
         return data;
     }
-
-
+    public String getStringData(){
+        return DateUtilities.longFormatDate(this.data);
+    }
     //methods
     public void prenota(int nPostiDaPrenotare) throws IllegalArgumentException{
         if(! DateUtilities.isntPassed(data))
